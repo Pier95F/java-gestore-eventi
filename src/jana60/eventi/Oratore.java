@@ -11,6 +11,12 @@ public class Oratore {
 		this.cognome = cognome;
 		this.titolo = titolo;
 	}
+	
+	public Oratore (Oratore oratore) {
+		this.nome = oratore.getNome();
+		this.cognome = oratore.getCognome();
+		this.titolo = oratore.getTitolo();
+		}
 
 	// Imposto i getter e i setter
 	public String getNome() {

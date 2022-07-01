@@ -6,30 +6,13 @@ public class Conferenza extends Evento {
 	
 	// Definisco gli attributi della classe
 	private String argomento;
-	private String oratore;
+	private Oratore oratore;
 	
 	// Costruttore
-	public Conferenza(String titolo, LocalDate data, int nPostiTotali, String argomento, String oratore) throws Exception {
+	public Conferenza(String titolo, LocalDate data, int nPostiTotali, String argomento, Oratore oratore) throws Exception {
 		super(titolo, data, nPostiTotali);
 		this.argomento = argomento;
-		this.oratore = oratore;
-	}
-
-	// Imposto getter e setter
-	public String getArgomento() {
-		return argomento;
-	}
-
-	public void setArgomento(String argomento) {
-		this.argomento = argomento;
-	}
-
-	public String getOratore() {
-		return oratore;
-	}
-
-	public void setOratore(String oratore) {
-		this.oratore = oratore;
+		this.oratore = new Oratore (oratore.getNome(), oratore.getCognome(), oratore.getTitolo());
 	}
 	
 	// Override per la restituzione della stringa
