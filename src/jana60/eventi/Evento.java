@@ -113,7 +113,7 @@ public class Evento {
 		String dataFormattata;
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		dataFormattata = this.data.format(df);
-		return dataFormattata;
+		return titolo + " in data " + dataFormattata;
 	}
 	
 	

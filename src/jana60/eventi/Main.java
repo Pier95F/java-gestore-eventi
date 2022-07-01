@@ -1,6 +1,7 @@
 package jana60.eventi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -38,20 +39,19 @@ public class Main {
 		System.out.println("Inserisci l'anno dell'evento: ");
 		int anno = scan.nextInt();
 		LocalDate data = LocalDate.of(anno, mese, giorno);
-		System.out.println("La data dell'evento è: " + data.toString());
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		System.out.println("La data dell'evento è: " + data.format(df));
 
 		// Inizializzo l'evento 
 		try {
 				Evento evento = new Evento(titolo, data, nPostiTotali);
 				String risposta;
-				boolean flag = false;
 				System.out.println("Vuoi partecipare all'evento? Si/No");
 				scan.nextLine();
 				do {
 					risposta = scan.nextLine();
 					if (risposta.equals("No")) {
 						System.out.println("Grazie ed arrivederci.");
-						flag = true;
 						break;
 					}
 					System.out.println("Inserisci il numero di prenotazioni che vuoi effettuare: ");
@@ -59,14 +59,13 @@ public class Main {
 					for (int i = 0; i<nPostiPrenotati; i++) {
 						evento.prenota();
 					}
-					System.out.println("Hai effettuato " + nPostiPrenotati + " prenotazioni per l'evento " + titolo + ", sono disponibili ancora " + evento.nPostiDisponibili() + " posti.");
+					System.out.println("Hai effettuato " + nPostiPrenotati + " prenotazioni per l'evento " + evento.toString() + ", sono disponibili ancora " + evento.nPostiDisponibili() + " posti.");
 					
 					System.out.println("Vuoi disdire dei biglietti? Si/No");
 					scan.nextLine();
 					risposta = scan.nextLine();
 					if (risposta.equals("No")) {
 						System.out.println("Non hai effettuato disdette. I posti disponibili sono ancora " + evento.nPostiDisponibili());
-						flag = true;
 						break;
 					}
 					System.out.println("Quanti biglietti vuoi disdire?");
