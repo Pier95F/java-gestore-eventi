@@ -37,10 +37,10 @@ public class Evento {
 	private int nPostiTotali, nPostiPrenotati;
 	
 	// Costruttore con relative eccezioni
-	public Evento(String titolo, LocalDate data, int nPostiTotali, int nPostiPrenotati) throws Exception{
+	public Evento(String titolo, LocalDate data, int nPostiTotali) throws Exception{
 		
 		// Controllo dei posti totali
-		if (nPostiTotali >0) {
+	    if (nPostiTotali >0) {
 			this.nPostiTotali = nPostiTotali;
 		} else {
 			throw new Exception("Errore: il numero dei posti totali deve essere maggiore di 0.");
@@ -49,9 +49,12 @@ public class Evento {
 		if (data.isAfter(LocalDate.now())) {
 			this.data = data;
 		} else {
-			throw new Exception("Errore: inserire una data valida.");
+			throw new Exception("Errore: Non è possibile prenotare eventi passati.");
+		} 
+		if (nPostiTotali>0) {
+			this.nPostiTotali = nPostiTotali;
 		}
-		
+		this.data = data;
 		this.titolo = titolo;
 		this.nPostiPrenotati = 0;
 	}
@@ -83,20 +86,23 @@ public class Evento {
 	}
 	
 	// Implementazione dei metodi
+	public int nPostiDisponibili () {
+		return nPostiTotali - nPostiPrenotati;
+	}
+	
 	public void prenota() throws Exception {
 		if (data.isBefore(LocalDate.now())) {
-			throw new Exception("Errore: non è possibile prenotare eventi passati.");
-		} else if (nPostiTotali == nPostiPrenotati) {
-			throw new Exception("L'evento è già al completo, non ci sono posti disponibili.");
+			throw new Exception("Errore: Non è possibile prenotare eventi passati.");	
+		}
+		else if (nPostiPrenotati > nPostiTotali) {
+			throw new Exception("Non ci sono sufficienti posti disponibili.");
 		} else 
 			nPostiPrenotati ++;
 	}
 	
 	public void disdici() throws Exception {
-		if (data.isBefore(LocalDate.now())) {
-			throw new Exception("Errore: non è possibile disdire eventi passati.");
-		} else if (nPostiPrenotati <1) {
-			throw new Exception("Non ci sono prenotazioni effettuate.");
+		if (nPostiPrenotati <1) {
+			throw new Exception("Non ci sono tutte queste prenotazioni effettuate.");
 		} else
 			nPostiPrenotati --;
 	}
@@ -107,7 +113,7 @@ public class Evento {
 		String dataFormattata;
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		dataFormattata = this.data.format(df);
-		return this.titolo + " - " + dataFormattata;
+		return dataFormattata;
 	}
 	
 	
